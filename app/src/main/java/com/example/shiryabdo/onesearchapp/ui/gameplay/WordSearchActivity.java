@@ -5,9 +5,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shiryabdo.onesearchapp.R;
 import com.example.shiryabdo.onesearchapp.adapters.WordSearchPagerAdapter;
@@ -36,16 +42,26 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private TextView mTimerTextView;
     private TextView mScoreTextView;
     private CountDownTimer mCountDownTimer;
+    WordSearchFragment wordSearchFragment ;
+
+    int numberQution_level_one = 5;
+    int numberQution_level_two = 10;
+    int numberQution_level_three =30;
     private String mGameState;
     private long mTimeRemaining;
     private long mRoundTime;
     private int mScore;
     private int mSkipped;
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
+    private  int numberQution ,levelInputQution  ,NUMERoflevel;
+    Bundle bundle ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        numberQution=NUMERoflevel=0;
+        int timeNumber =5;
+        bundle =getIntent().getExtras();
         categoryId = R.string.ga_gameplay_screen;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
@@ -71,6 +87,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
          */
         mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager(), getApplicationContext());
 
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mWordSearchPagerAdapter);
@@ -79,6 +96,24 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mTimeRemaining = mRoundTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
+          int qutionmuberLevel = bundle.getInt("qutionNumper");
+        if (qutionmuberLevel!=0){
+            levelInputQution= qutionmuberLevel;
+
+            setupCountDownTimer(mTimeRemaining);
+            startCountDownTimer();
+
+        }
+
+        int numerOfLevel = bundle.getInt("numerOflevels");
+        if(numerOfLevel!=0){
+             NUMERoflevel=numerOfLevel ;
+
+         }
+
+
+
+
     }
 
     private void pauseGameplay() {
@@ -124,6 +159,57 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void notifyWordFound() {
         mViewPager.setCurrentItem(currentItem);
         mScoreTextView.setText(Integer.toString(++mScore));
+        numberQution++;
+
+
+
+        if (levelInputQution <numberQution){
+            mCountDownTimer.cancel();
+            stopCountDownTimer();
+
+            Toast.makeText(this, "MUHMOUD", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+            // ...Irrelevant code for customizing the buttons and title
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.alert_gialoge, null);
+            NUMERoflevel++;
+
+            dialogBuilder.setView(dialogView);
+
+             Button nextlevel = ( Button) dialogView.findViewById(R.id.nextlevel);
+            nextlevel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                     Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
+
+                    i.putExtra("numerOflevels", NUMERoflevel++ );
+                    if(NUMERoflevel<11){
+                        i.putExtra("qutionNumper",numberQution_level_one);
+                       i.putExtra("timMin" ,5);
+                    }if(NUMERoflevel<21){
+                        i.putExtra("qutionNumper",numberQution_level_two);
+                        i.putExtra("timMin" ,10);
+
+                    }if(NUMERoflevel<31){
+                        i.putExtra("qutionNumper",numberQution_level_three);
+                        i.putExtra("timMin" ,20);
+
+                    }if(NUMERoflevel<41){
+
+                    }
+                     finish();
+                      startActivity(i);
+
+
+                }
+            });
+            TextView show =(TextView)dialogView.findViewById(R.id.show);
+            show.setText(Integer.toString(NUMERoflevel));
+             AlertDialog alertDialog = dialogBuilder.create();
+            alertDialog.show();
+        }
+
     }
 
     @Override
@@ -196,6 +282,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             public void onFinish() {
                 mGameState = GameState.FINISHED;
                 mTimerTextView.setText("0");
+
+
                 ((WordSearchFragment) mWordSearchPagerAdapter.getFragmentFromCurrentItem(currentItem)).highlightWord();
                 (new CountDownTimer(ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS, TIMER_GRANULARITY_IN_MS) {
 
@@ -210,6 +298,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                         finish();
                     }
                 }).start();
+//
+
+
             }
         };
     }

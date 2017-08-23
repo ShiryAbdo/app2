@@ -15,7 +15,7 @@ public class WordSearchManager {
 
 
     //easy level
-    public final static int EASY_MIN_WORDLENGTH = 5;
+    public final static int EASY_MIN_WORDLENGTH = 3;
     public final static int EASY_MAX_WORDLENGTH = 3;
     public final static int EASY_MIN_DIMENSION_OFFSET = 0;
     public final static int EASY_MAX_DIMENSION_OFFSET = 0;

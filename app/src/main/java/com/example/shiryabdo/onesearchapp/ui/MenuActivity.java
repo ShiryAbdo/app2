@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.shiryabdo.onesearchapp.ui.gameplay.PauseDialogFragment;
+import com.example.shiryabdo.onesearchapp.ui.gameplay.Suplevel;
+import com.example.shiryabdo.onesearchapp.ui.gameplay.SuplevelDialogFragment;
 import com.google.android.gms.common.ConnectionResult;
 
 import com.example.shiryabdo.onesearchapp.R;
@@ -21,6 +24,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     private final static String FIRST_TIME = "first_time";
 
     private final static long ROUND_TIME_IN_MS = 60000;
+    private final SuplevelDialogFragment mPauseDialogFragment = new SuplevelDialogFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         WordSearchManager wsm = WordSearchManager.getInstance();
         wsm.Initialize(new GameMode(GameType.Timed, gd, ROUND_TIME_IN_MS), getApplicationContext());
         wsm.buildWordSearches();
-        Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
+        Intent i = new Intent(this,  Suplevel.class);
         startActivity(i);
     }
 
