@@ -20,6 +20,7 @@
             android:gravity="center"
             android:layout_margin="@dimen/activity_vertical_margin">
 
+
             <com.example.shiryabdo.onesearchapp.ui.components.GameTextView
                 android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
                 android:text="Time"
@@ -34,6 +35,55 @@
                 android:textSize="@dimen/wordsearchactivity_indicator_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="2dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.example.shiryabdo.onesearchapp.ui.components.GameTextView
+                    android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
+                    android:id="@+id/countSum"
+                    android:textSize="@dimen/wordsearchactivity_indicator_text_title_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.example.shiryabdo.onesearchapp.ui.components.GameBoldTextView
+                    android:id="@+id/numberOfquetion"
+                    android:text=" / 5"
+                    android:gravity="center"
+                    android:textSize="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.example.shiryabdo.onesearchapp.ui.components.GameTextView
+                    android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
+                    android:id="@+id/countLevel"
+                    android:textSize="@dimen/wordsearchactivity_indicator_text_title_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.example.shiryabdo.onesearchapp.ui.components.GameBoldTextView
+                    android:id="@+id/numberOfLevel"
+                    android:gravity="center"
+                    android:textSize="10dp"
+                    android:text="level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
         </LinearLayout>
 

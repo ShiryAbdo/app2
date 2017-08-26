@@ -43,23 +43,31 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private TextView mScoreTextView;
     private CountDownTimer mCountDownTimer;
     WordSearchFragment wordSearchFragment ;
-
+   // number of leveles
     int numberQution_level_one = 5;
-    int numberQution_level_two = 10;
-    int numberQution_level_three =30;
+    int numberQution_level_two = 6;
+
+
+     // updat time  for evey level
+
+    int timMin  ;
+    TextView numberOfquetion ,countSum ,countLevel;
+
     private String mGameState;
     private long mTimeRemaining;
-    private long mRoundTime;
+    private long mRoundTime,timeAfter;
     private int mScore;
     private int mSkipped;
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
     private  int numberQution ,levelInputQution  ,NUMERoflevel;
     Bundle bundle ;
+    int sum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        numberQution=NUMERoflevel=0;
+        numberQution=1;
+        NUMERoflevel=1;
         int timeNumber =5;
         bundle =getIntent().getExtras();
         categoryId = R.string.ga_gameplay_screen;
@@ -68,6 +76,10 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mGameState = GameState.START;
         findViewById(R.id.bSkip).setOnClickListener(this);
         findViewById(R.id.bPause).setOnClickListener(this);
+        numberOfquetion =(TextView)findViewById(R.id.numberOfquetion);
+        countSum=(TextView)findViewById(R.id.countSum);
+        countLevel=(TextView)findViewById(R.id.countLevel);
+        countLevel.setText(Integer.toString(NUMERoflevel)+"");
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
@@ -93,23 +105,44 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mViewPager.setAdapter(mWordSearchPagerAdapter);
 
         mRoundTime = WordSearchManager.getInstance().getGameMode().getTime();
-        mTimeRemaining = mRoundTime;
-        setupCountDownTimer(mTimeRemaining);
-        startCountDownTimer();
+
           int qutionmuberLevel = bundle.getInt("qutionNumper");
         if (qutionmuberLevel!=0){
             levelInputQution= qutionmuberLevel;
+            numberOfquetion.setText(Integer.toString(levelInputQution));
 
-            setupCountDownTimer(mTimeRemaining);
-            startCountDownTimer();
+        }else {
+            numberOfquetion.setText("test");
 
         }
 
         int numerOfLevel = bundle.getInt("numerOflevels");
         if(numerOfLevel!=0){
              NUMERoflevel=numerOfLevel ;
+            countLevel.setText(Integer.toString(NUMERoflevel)+" ");
 
          }
+         Long timeAfterup =bundle.getLong("timeAfter");
+        if(timeAfterup!=0){
+            mTimeRemaining=timeAfterup;
+
+        }else {
+            mTimeRemaining = mRoundTime;
+
+        }
+         int updatTime = bundle.getInt("timMin");
+         if(updatTime!=0){
+
+             timMin=updatTime;
+             mTimeRemaining =mTimeRemaining-timMin;
+             timeAfter=mTimeRemaining;
+             setupCountDownTimer(mTimeRemaining);
+             startCountDownTimer();
+         }else {
+             setupCountDownTimer(mTimeRemaining);
+             startCountDownTimer();
+         }
+
 
 
 
@@ -159,21 +192,19 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void notifyWordFound() {
         mViewPager.setCurrentItem(currentItem);
         mScoreTextView.setText(Integer.toString(++mScore));
-        numberQution++;
-
-
+         sum =numberQution++;
+        countSum.setText(Integer.toString(sum));
 
         if (levelInputQution <numberQution){
             mCountDownTimer.cancel();
             stopCountDownTimer();
 
-            Toast.makeText(this, "MUHMOUD", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "MUHMOUD", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
             // ...Irrelevant code for customizing the buttons and title
             LayoutInflater inflater = this.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.alert_gialoge, null);
-            NUMERoflevel++;
-
+            final int increase  = NUMERoflevel++;
             dialogBuilder.setView(dialogView);
 
              Button nextlevel = ( Button) dialogView.findViewById(R.id.nextlevel);
@@ -181,25 +212,49 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                 @Override
                 public void onClick(View view) {
 
-                     Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
-
+                    Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
                     i.putExtra("numerOflevels", NUMERoflevel++ );
-                    if(NUMERoflevel<11){
+                    i.putExtra("timMin" , 5000);
+
+                     if(NUMERoflevel<=10){
                         i.putExtra("qutionNumper",numberQution_level_one);
-                       i.putExtra("timMin" ,5);
-                    }if(NUMERoflevel<21){
-                        i.putExtra("qutionNumper",numberQution_level_two);
-                        i.putExtra("timMin" ,10);
+                         i.putExtra("timeAfter", timeAfter );
+                        startActivity(i);
+                    }else if(NUMERoflevel<=20&& NUMERoflevel>10 ){
 
-                    }if(NUMERoflevel<31){
-                        i.putExtra("qutionNumper",numberQution_level_three);
-                        i.putExtra("timMin" ,20);
+                         if(NUMERoflevel==11){
+                             i.putExtra("timeAfter", mRoundTime+5000 );
+                             int numberQtion =sum+1 ;
+                             i.putExtra("qutionNumper",numberQtion);
+                         }else {
+                             i.putExtra("timeAfter", timeAfter );
+                         }
+                         startActivity(i);
+                    } else if(NUMERoflevel<=30&& NUMERoflevel>20 ){
 
-                    }if(NUMERoflevel<41){
+                         if(NUMERoflevel==21){
+                             i.putExtra("timeAfter", mRoundTime+5000 );
+                             int numberQtion =sum+1 ;
+                             i.putExtra("qutionNumper",numberQtion);
+                         }else {
+                             i.putExtra("timeAfter", timeAfter );
+                         }
+                         startActivity(i);
+                     }else if(NUMERoflevel<=40&& NUMERoflevel>30 ){
 
-                    }
-                     finish();
-                      startActivity(i);
+                         if(NUMERoflevel==31){
+                             i.putExtra("timeAfter", mRoundTime+5000 );
+                             int numberQtion =sum+1 ;
+                             i.putExtra("qutionNumper",numberQtion);
+                         }else {
+                             i.putExtra("timeAfter", timeAfter );
+                         }
+                         startActivity(i);
+                     }
+
+
+
+
 
 
                 }

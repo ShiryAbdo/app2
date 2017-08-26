@@ -23,7 +23,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     private final static String MENU_PREF_NAME = "menu_prefs";
     private final static String FIRST_TIME = "first_time";
 
-    private final static long ROUND_TIME_IN_MS = 60000;
+    private final static long ROUND_TIME_IN_MS = 90000;
     private final SuplevelDialogFragment mPauseDialogFragment = new SuplevelDialogFragment();
 
     @Override
