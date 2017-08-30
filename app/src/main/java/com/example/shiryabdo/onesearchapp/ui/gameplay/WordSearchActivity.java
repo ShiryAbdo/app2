@@ -128,23 +128,27 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
          Long timeAfterup =bundle.getLong("timeAfter");
         if(timeAfterup!=0){
             mTimeRemaining=timeAfterup;
+            setupCountDownTimer(mTimeRemaining);
+             startCountDownTimer();
 
         }else {
             mTimeRemaining = mRoundTime;
+            setupCountDownTimer(mTimeRemaining);
+             startCountDownTimer();
 
         }
-         int updatTime = bundle.getInt("timMin");
-         if(updatTime!=0){
-
-             timMin=updatTime;
-             mTimeRemaining =mTimeRemaining-timMin;
-             timeAfter=mTimeRemaining;
-             setupCountDownTimer(mTimeRemaining);
-             startCountDownTimer();
-         }else {
-             setupCountDownTimer(mTimeRemaining);
-             startCountDownTimer();
-         }
+//         int updatTime = bundle.getInt("timMin");
+//         if(updatTime!=0){
+//
+//             timMin=updatTime;
+//             mTimeRemaining =mTimeRemaining-timMin;
+//             timeAfter=mTimeRemaining;
+//             setupCountDownTimer(mTimeRemaining);
+//             startCountDownTimer();
+//         }else {
+//             setupCountDownTimer(mTimeRemaining);
+//             startCountDownTimer();
+//         }
 
 
 
@@ -235,53 +239,55 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                     }else {
                        i.putExtra("checkPss", false  );
                    }
+                    finish();
+                    startActivity(i);
 
-//                    i.putExtra("timMin" , 5000);
-
-                     if(NUMERoflevel<=10){
-                        i.putExtra("qutionNumper",numberQution_level_one);
-                         i.putExtra("timeAfter", timeAfter );
-
-
-                        startActivity(i);
-                         finish();
-                    }else if(NUMERoflevel<=20&& NUMERoflevel>10 ){
-
-                         if(NUMERoflevel==11){
-                             i.putExtra("timeAfter", mRoundTime+5000 );
-                             int numberQtion =sum+1 ;
-                             i.putExtra("qutionNumper",numberQtion);
-                         }else {
-                             i.putExtra("timeAfter", timeAfter );
-                         }
-
-                         startActivity(i);
-                         finish();
-                    } else if(NUMERoflevel<=30&& NUMERoflevel>20 ){
-
-                         if(NUMERoflevel==21){
-                             i.putExtra("timeAfter", mRoundTime+5000 );
-                             int numberQtion =sum+1 ;
-                             i.putExtra("qutionNumper",numberQtion);
-                         }else {
-                             i.putExtra("timeAfter", timeAfter );
-                         }
-
-                         startActivity(i);
-                         finish();
-                     }else if(NUMERoflevel<=40&& NUMERoflevel>30 ){
-
-                         if(NUMERoflevel==31){
-                             i.putExtra("timeAfter", mRoundTime+5000 );
-                             int numberQtion =sum+1 ;
-                             i.putExtra("qutionNumper",numberQtion);
-                         }else {
-                             i.putExtra("timeAfter", timeAfter );
-                         }
-
-                         startActivity(i);
-                         finish();
-                     }
+//                       i.putExtra("timMin" , 5000);
+//
+//                     if(NUMERoflevel<=10){
+//                        i.putExtra("qutionNumper",numberQution_level_one);
+////                         i.putExtra("timeAfter", timeAfter );
+//
+//
+//                        startActivity(i);
+//                         finish();
+//                    }else if(NUMERoflevel<=20&& NUMERoflevel>10 ){
+//
+//                         if(NUMERoflevel==11){
+////                             i.putExtra("timeAfter", mRoundTime+5000 );
+//                             int numberQtion =sum+1 ;
+//                             i.putExtra("qutionNumper",numberQtion);
+//                         }else {
+////                             i.putExtra("timeAfter", timeAfter );
+//                         }
+//
+//                         startActivity(i);
+//                         finish();
+//                    } else if(NUMERoflevel<=30&& NUMERoflevel>20 ){
+//
+//                         if(NUMERoflevel==21){
+////                             i.putExtra("timeAfter",  90000 );
+//                             int numberQtion =sum+1 ;
+//                             i.putExtra("qutionNumper",numberQtion);
+//                         }else {
+////                             i.putExtra("timeAfter", timeAfter );
+//                         }
+//
+//                         startActivity(i);
+//                         finish();
+//                     }else if(NUMERoflevel<=40&& NUMERoflevel>30 ){
+//
+//                         if(NUMERoflevel==31){
+////                             i.putExtra("timeAfter",  90000 );
+//                             int numberQtion =sum+1 ;
+//                             i.putExtra("qutionNumper",numberQtion);
+//                         }else {
+////                             i.putExtra("timeAfter", timeAfter );
+//                         }
+//
+//                         startActivity(i);
+//                         finish();
+//                     }
 
 
 

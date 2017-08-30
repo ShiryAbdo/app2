@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(v);
 
             v.setOnClickListener(this);
-            textView = (TextView) v.findViewById(R.id.textView);
+//            textView = (TextView) v.findViewById(R.id.textView);
             imageView = (ImageView) v.findViewById(R.id.imageView);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout);
 
@@ -51,8 +51,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void setData(DataModel item) {
             this.item = item;
 
-            textView.setText(Integer.toString(item.text));
-            imageView.setImageResource(item.drawable);
+//            textView.setText(Integer.toString(item.text));
+            imageView.setImageDrawable(item.drawable);
             relativeLayout.setBackgroundColor(Color.parseColor(item.color));
 
         }
