@@ -5,6 +5,7 @@
     <dimen name="element_margin_separation">4dp</dimen>
     <dimen name="top_bar">80dp</dimen>
     <dimen name="bottom_bar">40dp</dimen>
+    <dimen name="margin10">3dp</dimen>
 
     <!--Gameplay-->
     <dimen name="grid_horizontal_margin">4dp</dimen>

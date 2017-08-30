@@ -1,6 +1,8 @@
 package com.example.shiryabdo.onesearchapp.ui.gameplay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,6 +23,8 @@ import com.example.shiryabdo.onesearchapp.base.BaseActivity;
 import com.example.shiryabdo.onesearchapp.framework.WordSearchManager;
 import com.example.shiryabdo.onesearchapp.models.GameState;
 import com.example.shiryabdo.onesearchapp.ui.ResultsActivity;
+
+import java.util.ArrayList;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
@@ -45,9 +49,10 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     WordSearchFragment wordSearchFragment ;
    // number of leveles
     int numberQution_level_one = 5;
+
     int numberQution_level_two = 6;
 
-
+ ArrayList score ;
      // updat time  for evey level
 
     int timMin  ;
@@ -62,14 +67,17 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private  int numberQution ,levelInputQution  ,NUMERoflevel;
     Bundle bundle ;
     int sum;
+    SharedPreferences sharedPreferences ;
+    SharedPreferences.Editor editor ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        numberQution=1;
-        NUMERoflevel=1;
-        int timeNumber =5;
         bundle =getIntent().getExtras();
+        numberQution=1;
+        NUMERoflevel=bundle.getInt("numerOflevels");
+        int timeNumber =5;
+        score =new ArrayList();
         categoryId = R.string.ga_gameplay_screen;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
@@ -87,16 +95,10 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mScore = 0;
         mSkipped = 0;
 
-        // Create the adapter that will return a fragment for each of the
-        // primary sections of the activity.
-        /*
-          The {@link android.support.v4.view.PagerAdapter} that will provide
-          fragments for each of the sections. We use a
-          {@link FragmentPagerAdapter} derivative, which will keep every
-          loaded fragment in memory. If this becomes too memory intensive, it
-          may be best to switch to a
-          {@link android.support.v13.app.FragmentStatePagerAdapter}.
-         */
+        sharedPreferences =  getSharedPreferences("not", Context.MODE_PRIVATE);
+        editor= sharedPreferences.edit();
+
+
         mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager(), getApplicationContext());
 
 
@@ -105,6 +107,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mViewPager.setAdapter(mWordSearchPagerAdapter);
 
         mRoundTime = WordSearchManager.getInstance().getGameMode().getTime();
+
 
           int qutionmuberLevel = bundle.getInt("qutionNumper");
         if (qutionmuberLevel!=0){
@@ -192,8 +195,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void notifyWordFound() {
         mViewPager.setCurrentItem(currentItem);
         mScoreTextView.setText(Integer.toString(++mScore));
-         sum =numberQution++;
+          sum =numberQution++;
         countSum.setText(Integer.toString(sum));
+
 
         if (levelInputQution <numberQution){
             mCountDownTimer.cancel();
@@ -204,22 +208,43 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             // ...Irrelevant code for customizing the buttons and title
             LayoutInflater inflater = this.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.alert_gialoge, null);
-            final int increase  = NUMERoflevel++;
-            dialogBuilder.setView(dialogView);
-
+             dialogBuilder.setView(dialogView);
+             final TextView score =(TextView)dialogView.findViewById(R.id.score);
+            score.setText(mScoreTextView.getText());
+            final String scoreView = mScoreTextView.getText().toString();
              Button nextlevel = ( Button) dialogView.findViewById(R.id.nextlevel);
+            final TextView show =(TextView)dialogView.findViewById(R.id.show);
+            show.setText(Integer.toString(NUMERoflevel));
+            final String countSumM= countSum.getText().toString();
+
             nextlevel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
+                    Intent i = new Intent(getApplicationContext(),  Suplevel.class);
+                    i.putExtra("level",NUMERoflevel);
+                    editor.putString(Integer.toString(NUMERoflevel),scoreView  );
+                    editor.commit();
                     i.putExtra("numerOflevels", NUMERoflevel++ );
-                    i.putExtra("timMin" , 5000);
+                    i.putExtra("scoreView",scoreView  );
+
+
+                   if (scoreView.equals(countSumM)) {
+
+                       i.putExtra("checkPss",true  );
+                    }else {
+                       i.putExtra("checkPss", false  );
+                   }
+
+//                    i.putExtra("timMin" , 5000);
 
                      if(NUMERoflevel<=10){
                         i.putExtra("qutionNumper",numberQution_level_one);
                          i.putExtra("timeAfter", timeAfter );
+
+
                         startActivity(i);
+                         finish();
                     }else if(NUMERoflevel<=20&& NUMERoflevel>10 ){
 
                          if(NUMERoflevel==11){
@@ -229,7 +254,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                          }else {
                              i.putExtra("timeAfter", timeAfter );
                          }
+
                          startActivity(i);
+                         finish();
                     } else if(NUMERoflevel<=30&& NUMERoflevel>20 ){
 
                          if(NUMERoflevel==21){
@@ -239,7 +266,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                          }else {
                              i.putExtra("timeAfter", timeAfter );
                          }
+
                          startActivity(i);
+                         finish();
                      }else if(NUMERoflevel<=40&& NUMERoflevel>30 ){
 
                          if(NUMERoflevel==31){
@@ -249,7 +278,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                          }else {
                              i.putExtra("timeAfter", timeAfter );
                          }
+
                          startActivity(i);
+                         finish();
                      }
 
 
@@ -259,8 +290,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
                 }
             });
-            TextView show =(TextView)dialogView.findViewById(R.id.show);
-            show.setText(Integer.toString(NUMERoflevel));
+
              AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
         }

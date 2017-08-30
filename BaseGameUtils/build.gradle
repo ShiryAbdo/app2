@@ -20,10 +20,10 @@ buildscript {
 }
 
 dependencies {
-     compile 'com.android.support:appcompat-v7:26.+'
-     compile 'com.google.android.gms:play-services-fitness:11.0.0'
-     compile 'com.google.android.gms:play-services-wearable:11.0.0'
-     compile 'com.google.android.gms:play-services-appstate:7.8.0'
-     compile 'com.google.android.gms:play-services:11.0.0'
+    compile 'com.android.support:support-v13:26.+'
+
+
+    compile 'com.google.android.gms:play-services-appstate:7.8.0'
+     compile 'com.google.android.gms:play-services:7.8.0'
 
 }

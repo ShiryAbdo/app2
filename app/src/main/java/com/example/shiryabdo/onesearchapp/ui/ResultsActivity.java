@@ -83,7 +83,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
         scoreTextView.setText(Integer.toString(mScore));
-
+  // best escore
         if (mGameMode != null) {
             SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
             int bestScore = prefs.getInt(SCORE_PREFIX + mGameMode.getDifficulty(), 0);
