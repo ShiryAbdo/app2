@@ -83,6 +83,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         wsm.Initialize(new GameMode(GameType.Timed, gd, ROUND_TIME_IN_MS), getApplicationContext());
         wsm.buildWordSearches();
         Intent i = new Intent(this,  Suplevel.class);
+
         startActivity(i);
     }
 

@@ -9,16 +9,16 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import com.example.shiryabdo.onesearchapp.ui.gameplay.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.games.Games;
-
+ import com.example.shiryabdo.onesearchapp.ui.gameplay.MenuActivity;
 import com.example.shiryabdo.onesearchapp.R;
 import com.example.shiryabdo.onesearchapp.base.BaseGooglePlayServicesActivity;
 import com.example.shiryabdo.onesearchapp.framework.WordSearchManager;
 import com.example.shiryabdo.onesearchapp.models.GameAchievement;
 import com.example.shiryabdo.onesearchapp.models.GameDifficulty;
 import com.example.shiryabdo.onesearchapp.models.GameMode;
-import com.example.shiryabdo.onesearchapp.ui.gameplay.WordSearchActivity;
 
 public class ResultsActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
 
@@ -176,7 +176,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         switch (view.getId()) {
             case R.id.bReplay:
                 analyticsTrackEvent(R.string.ga_click_replay);
-                Intent intent = new Intent(getApplicationContext(), WordSearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(),   MenuActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bReturnMenu:

@@ -22,6 +22,7 @@ buildscript {
 dependencies {
     compile 'com.android.support:support-v13:26.+'
 
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
 
     compile 'com.google.android.gms:play-services-appstate:7.8.0'
      compile 'com.google.android.gms:play-services:7.8.0'

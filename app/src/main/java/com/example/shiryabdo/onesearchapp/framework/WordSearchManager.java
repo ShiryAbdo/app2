@@ -3,16 +3,14 @@ package com.example.shiryabdo.onesearchapp.framework;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import java.util.Random;
-
 import com.example.shiryabdo.onesearchapp.models.GameDifficulty;
 import com.example.shiryabdo.onesearchapp.models.GameMode;
 import com.example.shiryabdo.onesearchapp.wordSearchGenerator.generators.WordSearchGenerator;
 import com.example.shiryabdo.onesearchapp.wordSearchGenerator.models.FillType;
 
+import java.util.Random;
+
 public class WordSearchManager {
-
-
 
     //easy level
     public final static int EASY_MIN_WORDLENGTH = 3;
@@ -22,24 +20,53 @@ public class WordSearchManager {
 
     // medium level
     public final static int MEDIUM_MIN_WORDLENGTH = 4;
-    public final static int MEDIUM_MAX_WORDLENGTH = 5;
-    public final static int MEDIUM_MIN_DIMENSION_OFFSET = 1;
-    public final static int MEDIUM_MAX_DIMENSION_OFFSET = 1;
-
+    public final static int MEDIUM_MAX_WORDLENGTH = 4;
+    public final static int MEDIUM_MIN_DIMENSION_OFFSET = 0;
+    public final static int MEDIUM_MAX_DIMENSION_OFFSET = 0;
 
     // hard level
-    public final static int HARD_MIN_WORDLENGTH = 6;
-    public final static int HARD_MAX_WORDLENGTH = 7;
-    public final static int HARD_MIN_DIMENSION_OFFSET = 3;
-    public final static int HARD_MAX_DIMENSION_OFFSET = 3;
+    public final static int HARD_MIN_WORDLENGTH = 5;
+    public final static int HARD_MAX_WORDLENGTH = 5;
+    public final static int HARD_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD_MAX_DIMENSION_OFFSET = 0;
+
+    // hard6 level
+    public final static int HARD6_MIN_WORDLENGTH = 6;
+    public final static int HARD6_MAX_WORDLENGTH = 6;
+    public final static int HARD6_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD6_MAX_DIMENSION_OFFSET = 0;
+
+    // hard7 level
+    public final static int HARD7_MIN_WORDLENGTH = 7;
+    public final static int HARD7_MAX_WORDLENGTH = 7;
+    public final static int HARD7_MIN_DIMENSION_OFFSET = 3;
+    public final static int HARD7_MAX_DIMENSION_OFFSET = 3;
+
+    // hard8 level
+    public final static int HARD8_MIN_WORDLENGTH = 8;
+    public final static int HARD8_MAX_WORDLENGTH = 8;
+    public final static int HARD8_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD8_MAX_DIMENSION_OFFSET = 0;
+
+    // hard9 level
+    public final static int HARD9_MIN_WORDLENGTH = 9;
+    public final static int HARD9_MAX_WORDLENGTH = 9;
+    public final static int HARD9_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD9_MAX_DIMENSION_OFFSET = 0;
+
+    // hard10 level
+    public final static int HARD10_MIN_WORDLENGTH = 10;
+    public final static int HARD10_MAX_WORDLENGTH = 10;
+    public final static int HARD10_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD10_MAX_DIMENSION_OFFSET = 0;
 
 
     // advancid level
 
     public final static int ADVANCED_MIN_WORDLENGTH = 9;
     public final static int ADVANCED_MAX_WORDLENGTH = 11;
-    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 4;
-    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 5;
+    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 0;
+    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 0;
 
     private final static int SIZE = 2;
     private static WordSearchManager mInstance;
@@ -118,22 +145,26 @@ public class WordSearchManager {
             mWordProvider = new WordProvider(context, ADVANCED_MIN_WORDLENGTH, ADVANCED_MAX_WORDLENGTH);
             mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
-        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Advanced)) {
-            mWordProvider = new WordProvider(context, ADVANCED_MIN_WORDLENGTH, ADVANCED_MAX_WORDLENGTH);
-            mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
-            mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
-        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Advanced)) {
-            mWordProvider = new WordProvider(context, ADVANCED_MIN_WORDLENGTH, ADVANCED_MAX_WORDLENGTH);
-            mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
-            mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
-        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Advanced)) {
-            mWordProvider = new WordProvider(context, ADVANCED_MIN_WORDLENGTH, ADVANCED_MAX_WORDLENGTH);
-            mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
-            mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
-        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Advanced)) {
-            mWordProvider = new WordProvider(context, ADVANCED_MIN_WORDLENGTH, ADVANCED_MAX_WORDLENGTH);
-            mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
-            mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
+        }  else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard6)) {
+            mWordProvider = new WordProvider(context, HARD6_MIN_WORDLENGTH, HARD6_MAX_WORDLENGTH);
+            mMinDimensionOffset = HARD6_MIN_DIMENSION_OFFSET;
+            mMaxDimensionOffset = HARD6_MAX_DIMENSION_OFFSET;
+        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard7)) {
+            mWordProvider = new WordProvider(context, HARD7_MIN_WORDLENGTH, HARD7_MAX_WORDLENGTH);
+            mMinDimensionOffset = HARD7_MIN_DIMENSION_OFFSET;
+            mMaxDimensionOffset = HARD7_MAX_DIMENSION_OFFSET;
+        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard8)) {
+            mWordProvider = new WordProvider(context, HARD8_MIN_WORDLENGTH, HARD8_MAX_WORDLENGTH);
+            mMinDimensionOffset = HARD8_MIN_DIMENSION_OFFSET;
+            mMaxDimensionOffset = HARD8_MAX_DIMENSION_OFFSET;
+        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard9)) {
+            mWordProvider = new WordProvider(context, HARD9_MIN_WORDLENGTH, HARD9_MAX_WORDLENGTH);
+            mMinDimensionOffset = HARD9_MIN_DIMENSION_OFFSET;
+            mMaxDimensionOffset = HARD9_MAX_DIMENSION_OFFSET;
+        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard10)) {
+            mWordProvider = new WordProvider(context, HARD10_MIN_WORDLENGTH, HARD10_MAX_WORDLENGTH);
+            mMinDimensionOffset = HARD10_MIN_DIMENSION_OFFSET;
+            mMaxDimensionOffset = HARD10_MAX_DIMENSION_OFFSET;
         }
     }
 

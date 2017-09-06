@@ -21,9 +21,7 @@ import com.example.shiryabdo.onesearchapp.base.BaseActivity;
 import java.util.ArrayList;
 
 public class Suplevel extends BaseActivity implements RecyclerViewAdapter.ItemListener {
-//     int numberQution_level_one = 5;
-//    int numberQution_level_two = 10;
-//    int numberQution_level_three =30;
+
     RecyclerView recyclerView;
     ArrayList arrayList ,newScore ;
     Bundle bundle ;
@@ -33,20 +31,19 @@ public class Suplevel extends BaseActivity implements RecyclerViewAdapter.ItemLi
     Intent i;
     int timMin  ;
     String score ,StringShERED  ;
-    int imagLoc ,NUMERoflevel ,level ;
+    int imagLoc ,NUMERoflevel  ;
     SharedPreferences sharedPreferences ;
-String backGroundColor;
+String backGroundColor,level;
     private final static long ROUND_TIME_IN_MS = 90000;
     TextDrawable drawable;
-    boolean checkPss;
+    boolean checkPss= false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seve_lavels_recycleview);
-        sharedPreferences= getSharedPreferences("not", Context.MODE_PRIVATE);
-        arrayList = new ArrayList();
+         arrayList = new ArrayList();
 
         newScore=new ArrayList();
         bundle=new Bundle();
@@ -56,12 +53,12 @@ String backGroundColor;
              timeAfterup=bundle.getLong("timeAfter");
              score= bundle.getString("scoreView");
              NUMERoflevel=bundle.getInt("numerOflevels");
-             level=bundle.getInt("level");
+             level=bundle.getString("level");
 
 
          }
 
-
+        sharedPreferences= getSharedPreferences(level, Context.MODE_PRIVATE);
 
         newScore.add(0);
         for(int i = 1; i <=sharedPreferences.getAll().size();){
@@ -88,6 +85,7 @@ String backGroundColor;
 
         if(StringShERED!= "" ) {
             for (int k=1; k <newScore.size(); ) {
+
                 backGroundColor="#1ACA85";
                   drawable= TextDrawable.builder()
                        .beginConfig()
@@ -161,16 +159,34 @@ String backGroundColor;
         timing(item.text) ;
          i.putExtra("timeAfter", timing(item.text) );
          i.putExtra("numerOflevels", item.text );
+        i.putExtra("level", level );
+
 
 
         if(item.text==1){
             i.putExtra("qutionNumper",  5 );
              checkPss=true;
+
         }
         else{
-             if (item.text>=newScore.size()){
-                checkPss= false;
-            }else {checkPss= true;}
+            if(item.text==newScore.size()){ item.drawable=TextDrawable.builder()
+                    .beginConfig()
+                    .textColor(Color.BLACK)
+                    .useFont(Typeface.DEFAULT)
+                    .width(60)
+                    .height(60)
+                    .fontSize(30)
+                    .bold()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRect(Integer.toString(1), Color.parseColor(backGroundColor));
+
+            }
+             if (item.text>newScore.size()){
+                checkPss=    false;
+                     }else {
+                 checkPss=     true;
+                     }
 
                if(item.text<=10) {
                 i.putExtra("qutionNumper",  5 );
@@ -196,8 +212,10 @@ String backGroundColor;
 
 
         if (checkPss!=false) {
+            Toast.makeText(getApplicationContext(), (item.text % 10)+ "  THIS", Toast.LENGTH_LONG).show();
+
             startActivity(i);
-                   Toast.makeText(getApplicationContext(), (item.text % 10)+ "  THIS", Toast.LENGTH_LONG).show();
+            onDestroy();
 
 
         }else{

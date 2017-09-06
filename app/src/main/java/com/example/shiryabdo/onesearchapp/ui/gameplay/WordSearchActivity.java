@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,10 +24,17 @@ import com.example.shiryabdo.onesearchapp.base.BaseActivity;
 import com.example.shiryabdo.onesearchapp.framework.WordSearchManager;
 import com.example.shiryabdo.onesearchapp.models.GameState;
 import com.example.shiryabdo.onesearchapp.ui.ResultsActivity;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import java.util.ArrayList;
 
-public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
+public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener,RewardedVideoAdListener {
 
     private final static boolean ON_SKIP_HIGHLIGHT_WORD = true;
     private final static long ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS = 500;
@@ -48,9 +56,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private CountDownTimer mCountDownTimer;
     WordSearchFragment wordSearchFragment ;
    // number of leveles
-    int numberQution_level_one = 5;
 
-    int numberQution_level_two = 6;
 
  ArrayList score ;
      // updat time  for evey level
@@ -66,9 +72,13 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
     private  int numberQution ,levelInputQution  ,NUMERoflevel;
     Bundle bundle ;
+    String level;
     int sum;
+    private AdView mAdView;
+     private RewardedVideoAd mAd;
+
     SharedPreferences sharedPreferences ;
-    SharedPreferences.Editor editor ;
+     public  SharedPreferences.Editor editor ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +86,13 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         bundle =getIntent().getExtras();
         numberQution=1;
         NUMERoflevel=bundle.getInt("numerOflevels");
-        int timeNumber =5;
+        level= bundle.getString("level");
+         sharedPreferences =  getSharedPreferences(level, Context.MODE_PRIVATE);
+
+
+
+        editor= sharedPreferences.edit();
+         int timeNumber =5;
         score =new ArrayList();
         categoryId = R.string.ga_gameplay_screen;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
@@ -95,8 +111,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mScore = 0;
         mSkipped = 0;
 
-        sharedPreferences =  getSharedPreferences("not", Context.MODE_PRIVATE);
-        editor= sharedPreferences.edit();
+
 
 
         mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager(), getApplicationContext());
@@ -137,24 +152,44 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
              startCountDownTimer();
 
         }
-//         int updatTime = bundle.getInt("timMin");
-//         if(updatTime!=0){
-//
-//             timMin=updatTime;
-//             mTimeRemaining =mTimeRemaining-timMin;
-//             timeAfter=mTimeRemaining;
-//             setupCountDownTimer(mTimeRemaining);
-//             startCountDownTimer();
-//         }else {
-//             setupCountDownTimer(mTimeRemaining);
-//             startCountDownTimer();
-//         }
+
+        // Use an activity context to get the rewarded video instance.
+
+//     if(NUMERoflevel>5&&NUMERoflevel<10){
 
 
+//     }
+//     if (NUMERoflevel%5==0){
+//         loadRewardedVideoAd();
+//     }
+
+
+   //*********************************** AdMode*****************************************************
+
+
+       // MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
+//        mAdView = (AdView) findViewById(R.id.adView);
+//        mAdView.setAdUnitId("ca-app-pub-1858974607441283/4821516577");
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+
+        // Load an ad into the AdMob banner view.
+        AdView adView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .setRequestAgent("android_studio:ad_template").build();
+                AdRequest adRequest = new AdRequest.Builder().build();
+
+        adView.loadAd(adRequest);
+ //
 
 
 
     }
+
+
+
+
+
 
     private void pauseGameplay() {
         if (mGameState.equals(GameState.PAUSE))
@@ -225,69 +260,29 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                 @Override
                 public void onClick(View view) {
 
-                    Intent i = new Intent(getApplicationContext(),  Suplevel.class);
-                    i.putExtra("level",NUMERoflevel);
-                    editor.putString(Integer.toString(NUMERoflevel),scoreView  );
+
+
+
+
+
+                    Intent i = new Intent(WordSearchActivity.this,  Suplevel.class);
+                    editor.putString(Integer.toString(NUMERoflevel), mScoreTextView.getText().toString()  );
                     editor.commit();
                     i.putExtra("numerOflevels", NUMERoflevel++ );
                     i.putExtra("scoreView",scoreView  );
-
-
+                    i.putExtra("level",level  );
                    if (scoreView.equals(countSumM)) {
 
                        i.putExtra("checkPss",true  );
                     }else {
                        i.putExtra("checkPss", false  );
                    }
-                    finish();
-                    startActivity(i);
 
-//                       i.putExtra("timMin" , 5000);
-//
-//                     if(NUMERoflevel<=10){
-//                        i.putExtra("qutionNumper",numberQution_level_one);
-////                         i.putExtra("timeAfter", timeAfter );
 //
 //
-//                        startActivity(i);
-//                         finish();
-//                    }else if(NUMERoflevel<=20&& NUMERoflevel>10 ){
-//
-//                         if(NUMERoflevel==11){
-////                             i.putExtra("timeAfter", mRoundTime+5000 );
-//                             int numberQtion =sum+1 ;
-//                             i.putExtra("qutionNumper",numberQtion);
-//                         }else {
-////                             i.putExtra("timeAfter", timeAfter );
-//                         }
-//
-//                         startActivity(i);
-//                         finish();
-//                    } else if(NUMERoflevel<=30&& NUMERoflevel>20 ){
-//
-//                         if(NUMERoflevel==21){
-////                             i.putExtra("timeAfter",  90000 );
-//                             int numberQtion =sum+1 ;
-//                             i.putExtra("qutionNumper",numberQtion);
-//                         }else {
-////                             i.putExtra("timeAfter", timeAfter );
-//                         }
-//
-//                         startActivity(i);
-//                         finish();
-//                     }else if(NUMERoflevel<=40&& NUMERoflevel>30 ){
-//
-//                         if(NUMERoflevel==31){
-////                             i.putExtra("timeAfter",  90000 );
-//                             int numberQtion =sum+1 ;
-//                             i.putExtra("qutionNumper",numberQtion);
-//                         }else {
-////                             i.putExtra("timeAfter", timeAfter );
-//                         }
-//
-//                         startActivity(i);
-//                         finish();
-//                     }
+                    startActivity(i);
+             finish();
+
 
 
 
@@ -333,6 +328,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mViewPager.setCurrentItem(currentItem);
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -341,12 +338,20 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             mGameState = GameState.PLAY;
         else
             pauseGameplay();
+
+        if (mAdView != null) {
+            mAdView.resume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         stopCountDownTimer();
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
     }
 
     @Override
@@ -382,11 +387,28 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                     }
 
                     public void onFinish() {
+
+                        mAd = MobileAds.getRewardedVideoAdInstance( getApplicationContext());
+                        mAd.setRewardedVideoAdListener(WordSearchActivity.this);
+                        if (mAd.isLoaded()) {
+                            mAd.show();
+                        }
+                        mAd.loadAd("ca-app-pub-1858974607441283/7740513326", new AdRequest.Builder().build());
+
+
                         Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
                         i.putExtra("score", mScore);
                         i.putExtra("skipped", mSkipped);
-                        startActivity(i);
-                        finish();
+//                        try {
+//                            i.wait(3000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+
+                            startActivity(i);
+                            finish();
+
+
                     }
                 }).start();
 //
@@ -414,4 +436,50 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         return mScore;
     }
 
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        if (mAd.isLoaded())
+        {
+            mAd.show();
+        }
+
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+
+    }
 }

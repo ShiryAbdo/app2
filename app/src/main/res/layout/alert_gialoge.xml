@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:background="@drawable/dotted_border"
+
+     android:layout_height="wrap_content">
 
     <LinearLayout
         android:paddingTop="30dp"
         android:layout_centerInParent="true"
         android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
@@ -16,43 +20,81 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="you win ....."
+            android:textStyle="italic"
+            android:text=" CongratulationsYou win ....."
            android:textColor="@color/blue"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textAlignment="center"            />
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:text="Your Score"
+        android:textStyle="italic"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+         android:textColor="@color/blue"
+        android:textSize="25dp"
+        android:textAlignment="center"            />
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:textStyle="italic"
+         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/score"
+        android:textColor="@color/blue"
+        android:textSize="50dp"
+        android:textAlignment="center"            />
+</LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/score"
-            android:textColor="@color/blue"
-            android:textSize="50dp"
-            android:textAlignment="center"            />
+
+           <TextView
+               android:textStyle="italic"
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:text="Level"
+               android:textColor="@color/blue"
+                android:textSize="30dp"
+               android:textAlignment="center"            />
+
+           <TextView
+               android:layout_weight="1"
+               android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:text="you win ....."
+               android:textColor="@color/blue"
+               android:id="@+id/show"
+               android:textSize="30dp"
+               android:textAlignment="center"            />
+
+       </LinearLayout>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="you win ....."
-            android:textColor="@color/blue"
-            android:id="@+id/show"
-            android:textSize="30dp"
-            android:textAlignment="center"            />
+
 
 
 
         <com.example.shiryabdo.onesearchapp.ui.components.GameButton
-            android:layout_width="match_parent"
+
+            android:layout_width="@dimen/_250sdp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
+            android:layout_margin="@dimen/_10sdp"
             android:text="next level"
             android:id="@+id/nextlevel" />
 
-    </LinearLayout
-        >
+    </LinearLayout>
 
 
 </LinearLayout>
