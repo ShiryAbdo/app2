@@ -39,8 +39,8 @@ public class WordSearchManager {
     // hard7 level
     public final static int HARD7_MIN_WORDLENGTH = 7;
     public final static int HARD7_MAX_WORDLENGTH = 7;
-    public final static int HARD7_MIN_DIMENSION_OFFSET = 3;
-    public final static int HARD7_MAX_DIMENSION_OFFSET = 3;
+    public final static int HARD7_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD7_MAX_DIMENSION_OFFSET = 0;
 
     // hard8 level
     public final static int HARD8_MIN_WORDLENGTH = 8;
@@ -149,7 +149,8 @@ public class WordSearchManager {
             mWordProvider = new WordProvider(context, HARD6_MIN_WORDLENGTH, HARD6_MAX_WORDLENGTH);
             mMinDimensionOffset = HARD6_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = HARD6_MAX_DIMENSION_OFFSET;
-        }else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard7)) {
+        }else if (mGameMode.getDifficulty().equals(GameDifficulty.
+                Hard7)) {
             mWordProvider = new WordProvider(context, HARD7_MIN_WORDLENGTH, HARD7_MAX_WORDLENGTH);
             mMinDimensionOffset = HARD7_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = HARD7_MAX_DIMENSION_OFFSET;

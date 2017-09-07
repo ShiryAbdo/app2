@@ -242,8 +242,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             mCountDownTimer.cancel();
             stopCountDownTimer();
 
-//            Toast.makeText(this, "MUHMOUD", Toast.LENGTH_SHORT).show();
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
             // ...Irrelevant code for customizing the buttons and title
             LayoutInflater inflater = this.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.alert_gialoge, null);

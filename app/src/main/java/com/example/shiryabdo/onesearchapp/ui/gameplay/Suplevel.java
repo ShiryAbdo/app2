@@ -154,8 +154,7 @@ String backGroundColor,level;
 
     @Override
     public void onItemClick(DataModel item) {
-        Toast.makeText(getApplicationContext(), item.text + " is clicked", Toast.LENGTH_SHORT).show();
-         i= new Intent(Suplevel.this, WordSearchActivity.class);
+          i= new Intent(Suplevel.this, WordSearchActivity.class);
         timing(item.text) ;
          i.putExtra("timeAfter", timing(item.text) );
          i.putExtra("numerOflevels", item.text );
@@ -212,16 +211,13 @@ String backGroundColor,level;
 
 
         if (checkPss!=false) {
-            Toast.makeText(getApplicationContext(), (item.text % 10)+ "  THIS", Toast.LENGTH_LONG).show();
 
             startActivity(i);
             onDestroy();
 
 
         }else{
-       Toast.makeText(getApplicationContext(), (item.text % 10)+ "  THIS", Toast.LENGTH_LONG).show();
 
-             Toast.makeText(getApplicationContext(), item.text -1+ "you sould pass  the level", Toast.LENGTH_SHORT).show();
 
 
         }
